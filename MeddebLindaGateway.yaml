@@ -1,0 +1,20 @@
+spring:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:6001/eureka/
+  cloud:
+    gateway:
+      routes:
+        - id: microservice-commande
+          uri: lb://MeddebLindaGestionCommande
+          predicates:
+            - Path=/commande/**
+          filters:
+            - RewritePath=/commande/(?<path>.*) , /${path}
+            - BeforeDate= 2024-01-10T17:42:74.789-07:00[Africa/Tunis]
+        - id: microservice-transaction
+          uri: lb://MeddebLindaEXamenGestionTransaction
+          predicates:
+            - Path=/transaction/**
+          filters:
+            - RewritePath=/transaction/(?<path>.*) , /${path}
